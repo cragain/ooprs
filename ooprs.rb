@@ -5,9 +5,7 @@
 class Players
 attr_accessor :prsoption
 attr_reader :name
-
 end
-
 
 class Human<Players
   def initialize(name)
@@ -29,7 +27,6 @@ class Computer<Players
   def pick_hand
     self.prsoption = Hand::PRSOPTIONS.keys.sample
   end
-
 end
 
 class Hand
@@ -45,7 +42,6 @@ attr_reader :human, :computer, :prsoption
   end
   
   def compare_hands
-  
     if (human.prsoption == 'p' && computer.prsoption == 'r') ||(human.prsoption =='r' && computer.prsoption == 's') || (human.prsoption == 's' && computer.prsoption == 'p')
       puts "You win!"
     elsif (human.prsoption == computer.prsoption)
@@ -53,16 +49,13 @@ attr_reader :human, :computer, :prsoption
     else
       puts "You lose"
     end
-  
   end
   
   def play
     human.pick_hand
     computer.pick_hand
-    
-      puts "#{human.name} has picked #{human.prsoption}"
-      puts "#{computer.name} has picked #{computer.prsoption}"
-      
+    puts "#{human.name} has picked #{human.prsoption}"
+    puts "#{computer.name} has picked #{computer.prsoption}"
     compare_hands
   end
 end
