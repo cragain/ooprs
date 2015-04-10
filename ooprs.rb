@@ -3,37 +3,41 @@
 # 3) Once each player has selected a hand, the hands are compared and a winner is chosen.  Ties are just ties.  All hands result in player being asked to play again.
 
 class Players
-attr_accessor :prsoption
-attr_reader :name
+  attr_accessor :prs_option
+  attr_reader :name
 end
 
-class Human<Players
+class Human < Players
   def initialize(name)
     @name = name
   end
   
   def pick_hand
-    puts "What do you choose? (p/r/s)?"
-    self.prsoption = gets.chomp.downcase
+    begin  
+      puts "What do you choose? (p/r/s)?"
+      self.prs_option = gets.chomp.downcase
+    end until Hand::PRS_OPTIONS.keys.include?(prs_option)
+    
+  
   end
 end
 
-class Computer<Players
+class Computer < Players
   def initialize(name)
     @name = name
   end
   
   def pick_hand
-    self.prsoption = Hand::PRSOPTIONS.keys.sample
+    self.prs_option = Hand::PRS_OPTIONS.keys.sample
   end
 end
 
 class Hand
-  PRSOPTIONS = { 'p'=> 'Paper', 'r'=> 'Rock', 's'=> 'Scissors' }
+  PRS_OPTIONS = { 'p'=> 'Paper', 'r'=> 'Rock', 's'=> 'Scissors' }
 end
 
 class Game
-attr_reader :human, :computer, :prsoption
+attr_reader :human, :computer, :prs_option
 
   def initialize
     @human = Human.new("Chris")
@@ -41,9 +45,9 @@ attr_reader :human, :computer, :prsoption
   end
   
   def compare_hands
-    if (human.prsoption == 'p' && computer.prsoption == 'r') ||(human.prsoption =='r' && computer.prsoption == 's') || (human.prsoption == 's' && computer.prsoption == 'p')
+    if (human.prs_option == 'p' && computer.prs_option == 'r') ||(human.prs_option =='r' && computer.prs_option == 's') || (human.prs_option == 's' && computer.prs_option == 'p')
       puts "You win!"
-    elsif (human.prsoption == computer.prsoption)
+    elsif (human.prs_option == computer.prs_option)
       puts "You tie"
     else
       puts "You lose"
@@ -51,16 +55,19 @@ attr_reader :human, :computer, :prsoption
   end
   
   def play
-    human.pick_hand
-    computer.pick_hand
-    puts "#{human.name} has picked #{human.prsoption}"
-    puts "#{computer.name} has picked #{computer.prsoption}"
-    compare_hands
+    begin  
+      puts "Welcome to Paper Rock Scissors!"
+      human.pick_hand
+      computer.pick_hand
+      puts "#{human.name} has picked #{human.prs_option}"
+      puts "#{computer.name} has picked #{computer.prs_option}"
+      compare_hands
+      puts "Do You Want To Play Again? (Y/N)"
+      answer = gets.chomp.downcase
+    end until answer == "n" 
   end
 end
 
-begin
+
 Game.new.play
-puts "Do You Want To Play Again? (Y/N)"
-answer = gets.chomp.downcase
-end until answer == "n"
+
