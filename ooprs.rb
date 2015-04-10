@@ -16,7 +16,6 @@ class Human<Players
     puts "What do you choose? (p/r/s)?"
     self.prsoption = gets.chomp.downcase
   end
-  
 end
 
 class Computer<Players
